@@ -133,6 +133,19 @@ app.get('/api/blackboxAIChat', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+// Endpoint untuk Scraper Anggota JKT48
+    app.get('/api/jkt48-members', async (req, res) => {
+      try {
+        const members = await getJkt48Members();
+        res.status(200).json({
+          status: 200,
+          creator: "Nama Anda",
+          data: members,
+        });
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    });
 
 // Handle 404 error
 app.use((req, res, next) => {
