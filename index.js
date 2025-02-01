@@ -62,7 +62,23 @@ app.get('/stats', (req, res) => {
   };
   res.json(stats);
 });
+app.get("/api/jkt48/calendar", async (req, res) => {
+  try {
+    const { message } = req.query;
+    if (!message) {
+      return res.status(400).json({ error: 'Parameter "message" tidak ditemukan' });
+    }
 
+    const response = await scrapeJKT48Calendar(message);
+    res.status(200).json({
+      status: 200,
+      creator: "JazxCode",
+      data: { response },
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 app.get('/api/ragbot', async (req, res) => {
   try {
     const message = req.query.message;
